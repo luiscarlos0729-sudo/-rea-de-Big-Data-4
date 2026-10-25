@@ -1,0 +1,129 @@
+
+======================================================================
+1.1 CREATE - insertar un pedido de prueba
+======================================================================
+Insertado con _id: TEST0001
+
+======================================================================
+1.2 READ - leer el pedido recien insertado
+======================================================================
+{'_id': 'TEST0001',
+ 'country': 'Colombia',
+ 'customerId': 99999,
+ 'estado': 'completado',
+ 'invoiceDate': None,
+ 'invoiceNo': 'TEST0001',
+ 'items': [{'description': 'PRODUCTO DE PRUEBA',
+            'quantity': 2,
+            'stockCode': 'ABC123',
+            'subtotal': 20.0,
+            'unitPrice': 10.0}],
+ 'numItems': 1,
+ 'totalPedido': 20.0}
+
+======================================================================
+1.3 UPDATE - marcar el pedido de prueba como 'devuelto'
+======================================================================
+Documentos modificados: 1
+{'_id': 'TEST0001',
+ 'country': 'Colombia',
+ 'customerId': 99999,
+ 'estado': 'devuelto',
+ 'invoiceDate': None,
+ 'invoiceNo': 'TEST0001',
+ 'items': [{'description': 'PRODUCTO DE PRUEBA',
+            'quantity': 2,
+            'stockCode': 'ABC123',
+            'subtotal': 20.0,
+            'unitPrice': 10.0}],
+ 'numItems': 1,
+ 'totalPedido': 20.0}
+
+======================================================================
+1.4 DELETE - eliminar el pedido de prueba
+======================================================================
+Documentos eliminados: 1
+
+======================================================================
+2.1 Filtro simple - primeros 5 pedidos de United Kingdom
+======================================================================
+536365 United Kingdom 139.12
+536366 United Kingdom 22.2
+536367 United Kingdom 278.73
+536368 United Kingdom 70.05
+536369 United Kingdom 17.85
+
+======================================================================
+2.2 Filtro compuesto - pedidos completados con total mayor a 100
+======================================================================
+536365 completado 139.12
+536367 completado 278.73
+536370 completado 855.86
+536371 completado 204.0
+536373 completado 259.86
+
+======================================================================
+2.3 Filtro - pedidos devueltos
+======================================================================
+Total de pedidos devueltos: 93
+
+======================================================================
+3. JOIN con $lookup - pedidos + datos del cliente (segmento, pais)
+======================================================================
+{'_id': '536365',
+ 'cliente_pais': 'United Kingdom',
+ 'cliente_segmento': 'regular',
+ 'invoiceNo': '536365',
+ 'totalPedido': 139.12}
+{'_id': '536366',
+ 'cliente_pais': 'United Kingdom',
+ 'cliente_segmento': 'regular',
+ 'invoiceNo': '536366',
+ 'totalPedido': 22.2}
+{'_id': '536367',
+ 'cliente_pais': 'United Kingdom',
+ 'cliente_segmento': 'regular',
+ 'invoiceNo': '536367',
+ 'totalPedido': 278.73}
+{'_id': '536368',
+ 'cliente_pais': 'United Kingdom',
+ 'cliente_segmento': 'regular',
+ 'invoiceNo': '536368',
+ 'totalPedido': 70.05}
+{'_id': '536369',
+ 'cliente_pais': 'United Kingdom',
+ 'cliente_segmento': 'regular',
+ 'invoiceNo': '536369',
+ 'totalPedido': 17.85}
+
+======================================================================
+4.1 COUNT - numero de pedidos por pais (top 5)
+======================================================================
+{'_id': 'United Kingdom', 'numPedidos': 740}
+{'_id': 'Germany', 'numPedidos': 19}
+{'_id': 'France', 'numPedidos': 10}
+{'_id': 'EIRE', 'numPedidos': 9}
+{'_id': 'Portugal', 'numPedidos': 4}
+
+======================================================================
+4.2 SUM - ventas totales por pais (top 5)
+======================================================================
+{'_id': 'United Kingdom', 'ventasTotales': 253462.2}
+{'_id': 'Germany', 'ventasTotales': 5498.03}
+{'_id': 'France', 'ventasTotales': 4675.02}
+{'_id': 'Japan', 'ventasTotales': 4114.4800000000005}
+{'_id': 'Norway', 'ventasTotales': 3787.12}
+
+======================================================================
+4.3 AVERAGE - ticket promedio por pedido (global y por pais, top 5)
+======================================================================
+[{'_id': None, 'promedioGlobal': 352.61645}]
+{'_id': 'Japan', 'promedioPorPedido': 2057.2400000000002}
+{'_id': 'Norway', 'promedioPorPedido': 1893.56}
+{'_id': 'Iceland', 'promedioPorPedido': 711.79}
+{'_id': 'Spain', 'promedioPorPedido': 620.0}
+{'_id': 'France', 'promedioPorPedido': 467.50200000000007}
+
+======================================================================
+FIN DE LAS CONSULTAS
+======================================================================

@@ -9,25 +9,19 @@ de datos documental (MongoDB) en lugar de tablas relacionales.
 
 ## Contenido del repositorio
 
-```
-.
-├── docs/
-│   ├── investigacion_nosql.md   # Investigación: qué son las bases NoSQL, clasificación,
-│   │                             # ventajas/desventajas y casos de uso reales
-│   └── diseno_esquema.md        # Diseño de las colecciones clientes y pedidos
-├── scripts/
-│   ├── install_mongodb.sh       # Instala MongoDB 8.0 Community en la VM (Ubuntu 24.04)
-│   ├── mongod_override.conf     # Ajuste systemd para el bug de kernel 6.19+ (SERVER-121912)
-│   ├── seed_data.py             # Carga clientes y pedidos desde online_retail.csv
-│   └── queries.py               # CRUD, filtros, join ($lookup) y agregaciones
-└── evidencia/
-    ├── 01_mongod_activo.jpg     # systemctl status mongod
-    ├── 02_carga_datos_seed.jpg  # Carga de datos (559 clientes, 800 pedidos)
-    ├── 03_crud.jpg              # Create / Read / Update / Delete
-    ├── 04_filtros_join.jpg      # Filtros compuestos + $lookup
-    ├── 05_agregaciones.jpg      # $group con $sum y $avg
-    └── queries_output.txt       # Salida completa de queries.py
-```
+- `investigacion_nosql.md` — Investigación: qué son las bases NoSQL, clasificación,
+  ventajas/desventajas y casos de uso reales.
+- `diseno_esquema.md` — Diseño de las colecciones `clientes` y `pedidos`.
+- `install_mongodb.sh` — Instala MongoDB 8.0 Community en la VM (Ubuntu 24.04).
+- `mongod_override.conf` — Ajuste systemd para el bug de kernel 6.19+ (SERVER-121912).
+- `seed_data.py` — Carga clientes y pedidos desde `online_retail.csv`.
+- `queries.py` — CRUD, filtros, join (`$lookup`) y agregaciones.
+- `01_mongod_activo.jpg` — `systemctl status mongod`.
+- `02_carga_datos_seed.jpg` — Carga de datos (559 clientes, 800 pedidos).
+- `03_crud.jpg` — Create / Read / Update / Delete.
+- `04_filtros_join.jpg` — Filtros compuestos + `$lookup`.
+- `05_agregaciones.jpg` — `$group` con `$sum` y `$avg`.
+- `queries_output.txt` — Salida completa de `queries.py`.
 
 ## Esquema de MongoDB
 
@@ -40,7 +34,7 @@ Base de datos `tienda_ecommerce`, dos colecciones:
   evitar un `$lookup` en la consulta más común: "ventas por país".
 
 Detalle completo, con ejemplos de documento JSON y la justificación de cada decisión de
-modelado, en [`docs/diseno_esquema.md`](docs/diseno_esquema.md).
+modelado, en [`diseno_esquema.md`](diseno_esquema.md).
 
 ## Cómo ejecutarlo
 
@@ -48,19 +42,19 @@ En una VM con Ubuntu 24.04 (probado en `hadoop-node1`, VirtualBox):
 
 ```bash
 # 1. Instalar MongoDB 8.0
-bash scripts/install_mongodb.sh
+bash install_mongodb.sh
 
 # 2. Si mongod no arranca por incompatibilidad con kernel 6.19+:
 sudo mkdir -p /etc/systemd/system/mongod.service.d
-sudo cp scripts/mongod_override.conf /etc/systemd/system/mongod.service.d/override.conf
+sudo cp mongod_override.conf /etc/systemd/system/mongod.service.d/override.conf
 sudo systemctl daemon-reload
 sudo systemctl restart mongod
 
 # 3. Cargar los datos de prueba (requiere online_retail.csv en el home del usuario)
-python3 scripts/seed_data.py
+python3 seed_data.py
 
 # 4. Ejecutar las consultas (CRUD, filtros, join, agregaciones)
-python3 scripts/queries.py
+python3 queries.py
 ```
 
 ## Resultados
@@ -70,10 +64,10 @@ python3 scripts/queries.py
 - **93** pedidos marcados como devueltos.
 - Ventas totales en United Kingdom: **253.462,2**; ticket promedio global: **352,62**.
 - Evidencia completa de las cuatro operaciones CRUD, de un join con `$lookup` entre
-  `pedidos` y `clientes`, y de agregaciones de conteo, suma y promedio en
-  [`evidencia/`](evidencia/) y en [`evidencia/queries_output.txt`](evidencia/queries_output.txt).
+  `pedidos` y `clientes`, y de agregaciones de conteo, suma y promedio en las imágenes
+  de este repositorio y en [`queries_output.txt`](queries_output.txt).
 
 ## Enlaces
 
-- Video explicativo: *(pendiente)*
+- Presentación online: *(pendiente)*
 - Informe escrito (Tarea4_grupo.docx): entregado en la plataforma UNAD
